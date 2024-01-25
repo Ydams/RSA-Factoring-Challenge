@@ -1,43 +1,35 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Factorize numbers into a product of two smaller numbers.
-
-Usage: factors <file>
-where <file> is a file containing natural numbers to factor.
-One number per line.
-You can assume that all lines will be valid natural numbers greater than 1.
-You can assume that there will be no empty line, and no space before and after the valid number.
-The file will always end with a new line.
-Output format: n=p*q
-One factorization per line.
-p and q don’t have to be prime numbers.
+Print the prime factorization of an integer.
 """
 
-import math
-import sys
+from sys import argv
 
-def factorize(n):
-    """Factorize a number into two smaller numbers."""
-    for i in range(2, int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            return (i, n // i)
-    return None
+def prime_factorization(num):
+    """Print the prime factorization of an integer."""
+    print("{:d}=".format(num), end="")
 
-def main():
-    """Read numbers from input file and write factorizations to output."""
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        sys.exit(1)
+    if num % 2 == 0:
+        print("{}*2".format(num // 2))
+        return
 
-    input_file = sys.argv[1]
-    output_file = "factorizations.txt"
-
-    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
-        for line in infile:
-            number = int(line.strip())
-            factors = factorize(number)
-            if factors:
-                outfile.write(f"{number}={factors[0]}*{factors[1]}\n")
+    for i in range(3, num, 2):
+        if num % i == 0:
+            factor = num // i
+            for j in range(3, factor, 2):
+                if factor % j == 0 or i % j == 0:
+                    break
+            print("{}*{}".format(factor, i))
+            break
 
 if __name__ == "__main__":
-    main()
+    if len(argv) != 2:
+        print("Usage: ./prime_factorization.py <number>")
+        exit(1)
+
+    try:
+        number = int(argv[1])
+        prime_factorization(number)
+    except ValueError:
+        print("Error: Input must be a valid integer.")
+        exit(1)
