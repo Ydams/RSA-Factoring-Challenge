@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""
+Factorize numbers into a product of two smaller numbers.
+"""
+
+import math
+
+def factorize(n):
+    """Factorize a number into two smaller numbers."""
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return (i, n // i)
+    return None
+
+def main(input_file, output_file):
+    """Read numbers from input file and write factorizations to output file."""
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+        for line in infile:
+            number = int(line.strip())
+            factors = factorize(number)
+            if factors:
+                outfile.write(f"{number}={factors[0]}*{factors[1]}\n")
+
+if __name__ == "__main__":
+    main("numbers.txt", "factorizations.txt")
