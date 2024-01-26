@@ -1,35 +1,7 @@
-#!/usr/bin/python3
-"""
-Print the prime factorization of an integer.
-"""
-
-from sys import argv
-
-def prime_factorization(num):
-    """Print the prime factorization of an integer."""
-    print("{:d}=".format(num), end="")
-
-    if num % 2 == 0:
-        print("{}*2".format(num // 2))
-        return
-
-    for i in range(3, num, 2):
-        if num % i == 0:
-            factor = num // i
-            for j in range(3, factor, 2):
-                if factor % j == 0 or i % j == 0:
-                    break
-            print("{}*{}".format(factor, i))
-            break
-
-if __name__ == "__main__":
-    if len(argv) != 2:
-        print("Usage: ./prime_factorization.py <number>")
-        exit(1)
-
-    try:
-        number = int(argv[1])
-        prime_factorization(number)
-    except ValueError:
-        print("Error: Input must be a valid integer.")
-        exit(1)
+#!/usr/bin/bash
+FILE=$1
+while read NUMBERS;
+do
+        factors=($(factor $NUMBER))
+        echo "$NUMBERS=$(($NUMBERS/${factors[factors[1]}))*${factors[1]}"
+done < $FILE
